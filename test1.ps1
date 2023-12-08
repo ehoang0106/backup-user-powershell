@@ -83,7 +83,7 @@ function Backup-UserData {
         $folderExisted = $false
     
         while (!($folderExisted)) {
-            $username = Read-Host "Enter the folder username in C drive"
+            $username = $env:Username
     
             Write-Host "Checking if $username folder existed..."
             Start-Sleep 1
