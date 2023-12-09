@@ -82,7 +82,8 @@ function Backup-UserData {
         #copy folder from "C:\Users\<Username>, but only copy 3 main folders which is Desktop, Downloads, and Documents"
         $folderExisted = $false
     
-        while (!($folderExisted)) {
+        while (!($folderExisted)) 
+        {
             $username = $env:Username
     
             Write-Host "Checking if $username folder existed..."
@@ -126,7 +127,7 @@ function Backup-UserData {
             else {
                 Write-Host "Folder <$username> does not exists. Try again!"
             }
-        }
+          }
         
         
     }

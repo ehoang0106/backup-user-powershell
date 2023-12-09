@@ -79,10 +79,10 @@ function Backup-UserData {
             }
         }
     
-        #copy folder from "C:\Users\<Username>, but only copy 3 main folders which is Desktop, Downloads, and Documents"
-        $folderExisted = $false
+        
+        $isFolderExisted = $true #flag uf folder existed
     
-        while (!($folderExisted)) {
+        while ($isFolderExisted) {
             $username = Read-Host "Enter the folder username in C drive"
     
             Write-Host "Checking if $username folder existed..."
@@ -105,22 +105,19 @@ function Backup-UserData {
                     # /nfl no file will be listed
                     # /ndl no directories will be listed
     
-                    #Copy-Item "C:\Users\$username\$dir\*" -Destination "$usersPath\$folderName\$dir\" -Recurse 
-                    
-    
+                
                 }
     
-                $folderExisted = $true
+                $isFolderExisted = $false #if folder does not exist, stop the loop
+
+
                 Write-Host "----------------------------"
                 Write-Host "Successfully backed up data!"
                 Write-Host "----------------------------"
-    
-                #Remove the network drive after done
-    
-                remove-PSDrive -Name "TempNetworkDrive"
-    
+        
+                
                 Write-Host "Press any key to continue..."
-                $null = $Host.UI.RawUI.ReadKey("NoEcho, IncludeKeyDown") #press any key to continue
+                $null = $Host.UI.RawUI.ReadKey("NoEcho, IncludeKeyDown") #this a press any key to continue
                 
             }
             else {
@@ -132,7 +129,6 @@ function Backup-UserData {
     }
     catch {
         #try to access the network folder just entered the IP address here. If success write-host successful else unsucessful
-
         write-host "Unsuccessful connecting the network drive. Try again!"
     }
 }
@@ -162,6 +158,8 @@ while ($true) {
 
     }
     elseif ($option -eq "3") {
+        #remove temporary mapped networkdrive
+        remove-PSDrive -Name "TempNetworkDrive"
         break
     }
     else {
