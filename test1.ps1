@@ -79,12 +79,16 @@ function Backup-UserData {
             }
         }
     
-        #copy folder from "C:\Users\<Username>, but only copy 3 main folders which is Desktop, Downloads, and Documents"
-        $folderExisted = $false
+        
+        $isFolderExisted = $true #flag uf folder existed
     
-        while (!($folderExisted)) 
-        {
-            $username = $env:Username
+        while ($isFolderExisted) {
+            #debug 
+            $username = Read-Host "Enter the folder username in C drive"
+
+
+            #get the exact folder for the current logged in user to start the copy process
+            #$username = $env:Username
     
             Write-Host "Checking if $username folder existed..."
             Start-Sleep 1
@@ -98,7 +102,7 @@ function Backup-UserData {
                     Write-Host "Copying $dir...`nPlease wait!..."
                     Start-Sleep -seconds 1.5
     
-                    robocopy "C:\Users\$username\$dir\" "$usersPath\$folderName\$dir\" /e /r:0 /w:0 /eta  /nfl /ndl
+                    robocopy "C:\Users\$username\$dir\" "$usersPath\$folderName\$dir\" /e /r:0 /w:0 /njs /eta
                     # /e copies subdirectories and include empty directories
                     # /r retry times default is 1million
                     # /w wait time after the failed to copy
@@ -106,71 +110,74 @@ function Backup-UserData {
                     # /nfl no file will be listed
                     # /ndl no directories will be listed
     
-                    #Copy-Item "C:\Users\$username\$dir\*" -Destination "$usersPath\$folderName\$dir\" -Recurse 
-                    
-    
+                
                 }
     
-                $folderExisted = $true
+                $isFolderExisted = $false #if folder does not exist, stop the loop
+
+
                 Write-Host "----------------------------"
                 Write-Host "Successfully backed up data!"
                 Write-Host "----------------------------"
-    
-                #Remove the network drive after done
-    
-                remove-PSDrive -Name "TempNetworkDrive"
-    
+        
+                
                 Write-Host "Press any key to continue..."
-                $null = $Host.UI.RawUI.ReadKey("NoEcho, IncludeKeyDown") #press any key to continue
+                $null = $Host.UI.RawUI.ReadKey("NoEcho, IncludeKeyDown") #this a press any key to continue
                 
             }
             else {
                 Write-Host "Folder <$username> does not exists. Try again!"
             }
-          }
+        }
         
         
     }
     catch {
         #try to access the network folder just entered the IP address here. If success write-host successful else unsucessful
-
         write-host "Unsuccessful connecting the network drive. Try again!"
     }
 }
 
 
+function Open-Menu {
+    param (
+        $option
+    )
 
-
-
-while ($true) {
-    Write-Host "`n----------------------"
-    Write-Host "Enter (1) to Backup"
-    Write-Host "Enter (2) to Restore"
-    Write-Host "Enter (3) to Exit"
-    Write-Host "----------------------"
-
-
-    $option = Read-Host "Enter option"
-
-    if ($option -eq "1") {
-        Backup-UserData -usersPath $usersPath -qnapCredentials $qnapCredentials -qnapIpaddress $qnapIpaddress -directories $directories
+    while ($true) {
+        Write-Host "`n----------------------"
+        Write-Host "Enter (1) to Backup"
+        Write-Host "Enter (2) to Restore"
+        Write-Host "Enter (3) to Exit"
+        Write-Host "----------------------"
+    
+    
+        $option = Read-Host "Enter option"
+    
+        if ($option -eq "1") {
+            Backup-UserData -usersPath $usersPath -qnapCredentials $qnapCredentials -qnapIpaddress $qnapIpaddress -directories $directories
+            
+        }
+        elseif ($option -eq "2") {
+            Write-Host "-------------------------------------"
+            Write-Host "This function is under developing...`n Try again later :)`n"
+            Write-Host "-------------------------------------"
+    
+        }
+        elseif ($option -eq "3") {
+            #remove temporary mapped networkdrive
+            remove-PSDrive -Name "TempNetworkDrive"
+            break
+        }
+        else {
+            Write-Host "Invalid. Try again!"
+        }
         
     }
-    elseif ($option -eq "2") {
-        Write-Host "-------------------------------------"
-        Write-Host "This function is under developing...`n Try again later :)`n"
-        Write-Host "-------------------------------------"
-
-    }
-    elseif ($option -eq "3") {
-        break
-    }
-    else {
-        Write-Host "Invalid. Try again!"
-    }
-    
     
 }
+
+Open-Menu
 
 
 

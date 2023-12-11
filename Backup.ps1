@@ -83,7 +83,12 @@ function Backup-UserData {
         $isFolderExisted = $true #flag uf folder existed
     
         while ($isFolderExisted) {
-            $username = Read-Host "Enter the folder username in C drive"
+            #debug 
+            #$username = Read-Host "Enter the folder username in C drive"
+
+
+            #get the exact folder for the current logged in user to start the copy process
+            $username = $env:Username
     
             Write-Host "Checking if $username folder existed..."
             Start-Sleep 1
@@ -97,7 +102,7 @@ function Backup-UserData {
                     Write-Host "Copying $dir...`nPlease wait!..."
                     Start-Sleep -seconds 1.5
     
-                    robocopy "C:\Users\$username\$dir\" "$usersPath\$folderName\$dir\" /e /r:0 /w:0 /eta  /nfl /ndl
+                    robocopy "C:\Users\$username\$dir\" "$usersPath\$folderName\$dir\" /e /r:0 /w:0 /njs /eta
                     # /e copies subdirectories and include empty directories
                     # /r retry times default is 1million
                     # /w wait time after the failed to copy
@@ -134,40 +139,45 @@ function Backup-UserData {
 }
 
 
+function Open-Menu {
+    param (
+        $option
+    )
 
-
-
-while ($true) {
-    Write-Host "`n----------------------"
-    Write-Host "Enter (1) to Backup"
-    Write-Host "Enter (2) to Restore"
-    Write-Host "Enter (3) to Exit"
-    Write-Host "----------------------"
-
-
-    $option = Read-Host "Enter option"
-
-    if ($option -eq "1") {
-        Backup-UserData -usersPath $usersPath -qnapCredentials $qnapCredentials -qnapIpaddress $qnapIpaddress -directories $directories
+    while ($true) {
+        Write-Host "`n----------------------"
+        Write-Host "Enter (1) to Backup"
+        Write-Host "Enter (2) to Restore"
+        Write-Host "Enter (3) to Exit"
+        Write-Host "----------------------"
+    
+    
+        $option = Read-Host "Enter option"
+    
+        if ($option -eq "1") {
+            Backup-UserData -usersPath $usersPath -qnapCredentials $qnapCredentials -qnapIpaddress $qnapIpaddress -directories $directories
+            
+        }
+        elseif ($option -eq "2") {
+            Write-Host "-------------------------------------"
+            Write-Host "This function is under developing...`n Try again later :)`n"
+            Write-Host "-------------------------------------"
+    
+        }
+        elseif ($option -eq "3") {
+            #remove temporary mapped networkdrive
+            remove-PSDrive -Name "TempNetworkDrive"
+            break
+        }
+        else {
+            Write-Host "Invalid. Try again!"
+        }
         
     }
-    elseif ($option -eq "2") {
-        Write-Host "-------------------------------------"
-        Write-Host "This function is under developing...`n Try again later :)`n"
-        Write-Host "-------------------------------------"
-
-    }
-    elseif ($option -eq "3") {
-        #remove temporary mapped networkdrive
-        remove-PSDrive -Name "TempNetworkDrive"
-        break
-    }
-    else {
-        Write-Host "Invalid. Try again!"
-    }
-    
     
 }
+
+Open-Menu
 
 
 
