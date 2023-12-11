@@ -139,7 +139,7 @@ function Backup-UserData {
 }
 
 
-function Open-Menu {
+function Open-MenuOption {
     param (
         $option
     )
@@ -177,7 +177,6 @@ function Open-Menu {
     
 }
 
-Open-Menu
 
 
 
