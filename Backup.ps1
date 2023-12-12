@@ -22,7 +22,10 @@ function Backup-UserData {
         Write-Host "Connecting...Please wait!"
         Start-Sleep -seconds 2
         #create temporary PSDrive
-        New-PSDrive -Name "TempNetworkDrive" -PSProvider FileSystem -Root $usersPath -Credential $qnapCredentials | Out-Null
+        
+        $drive = New-PSDrive -Name "TempNetworkDrive" -PSProvider FileSystem -Root $usersPath -Credential $qnapCredentials -ErrorAction Stop | Out-Null
+        Write-Host $drive
+
         Write-Host "---------------------------------------------------------"
         Write-Host "Successful connected to the network drive $qnapIpaddress"
         Write-Host "---------------------------------------------------------"
@@ -84,11 +87,11 @@ function Backup-UserData {
     
         while ($isFolderExisted) {
             #debug 
-            #$username = Read-Host "Enter the folder username in C drive"
+            $username = Read-Host "Enter the folder username in C drive"
 
 
             #get the exact folder for the current logged in user to start the copy process
-            $username = $env:Username
+            #$username = $env:Username
     
             Write-Host "Checking if $username folder existed..."
             Start-Sleep 1
@@ -166,7 +169,7 @@ function Open-MenuOption {
         }
         elseif ($option -eq "3") {
             #remove temporary mapped networkdrive
-            remove-PSDrive -Name "TempNetworkDrive"
+            remove-PSDrive -Name "TempNetworkDrive" -ErrorAction Ignore
             break
         }
         else {
@@ -179,7 +182,7 @@ function Open-MenuOption {
 
 
 
-
+Open-MenuOption
 
 
 
