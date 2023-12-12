@@ -1,3 +1,5 @@
+
+
 $directories = @("Desktop", "Documents", "Downloads")
 #this path is a user path on QNAP
 $usersPath = "\\$qnapIpaddress\backup\Awaken\Users"
@@ -40,7 +42,7 @@ function Connect-QNAP {
             
 
             Write-Host "---------------------------------------------------------"
-            Write-Host "Successful connected to the network drive $qnapIpaddress"
+            Write-Host "Successfully connected to the network drive $qnapIpaddress"
             Write-Host "---------------------------------------------------------"
                 
             $isSuccess = $false
@@ -191,8 +193,6 @@ function Restore-UserData {
     #     OptionalParameters
     # )
 
-    
-
     try {
 
     
@@ -218,7 +218,7 @@ function Restore-UserData {
             Write-Host "Restoring $dir...`nPlease wait!..."
 
             #this is for testing
-            robocopy "$usersPath\$userFolderName\$dir" "C:\Users\Desktop\$destinationFolder\$dir" /e /r:0 /w:0 /njs /eta
+            robocopy "\\11.0.0.53\Backup\Awaken\Users\$userFolderName\$dir" "C:\Users\Desktop\$destinationFolder\$dir" /e /r:0 /w:0 /njs /eta /copy:dat
         }
 
         Write-Host "----------------------------"
@@ -258,7 +258,7 @@ function Main {
         }
         elseif ($option -eq "3") {
             #remove temporary mapped networkdrive
-            remove-PSDrive -Name "TempNetworkDrive"
+            remove-PSDrive -Name "TempNetworkDrive" -ErrorAction Ignore
             break
         }
         else {
