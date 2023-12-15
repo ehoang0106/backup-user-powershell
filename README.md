@@ -23,9 +23,9 @@ This script help admin backup and restore user's data to and from QNAP network d
 
 ## Usage
 
-- 1. Locate the script
-- 2. Right-click on the script file and choose **Run with Powershell**
-- 3. Follow the on-screen prompts to connect to the QNAP drive and choose between the options.
+1. Locate the script
+2. Right-click on the script file and choose **Run with Powershell**
+3. Follow the on-screen prompts to connect to the QNAP drive and choose between the options.
 
 ### Connecting to QNAP Drive
 - You will be prompted to enter your QNAP network drive credentials
