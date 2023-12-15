@@ -8,9 +8,9 @@ This script help admin backup and restore user's data to and from QNAP network d
 - **Data Restoration**: Restore backed-up data from the QNAP drive to the local machine.
 - **User Interface**: Simple menu-driven interface for ease of use.
 
-## How It's Made:
+## How It's Made
 
-**Tech used:**: Powershell
+**Tech used**: Powershell
 
 ## Prerequisites
 - Windows Powershell 5.1 or higher.
