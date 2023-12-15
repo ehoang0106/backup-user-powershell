@@ -1,5 +1,5 @@
 # QNAP Backup and Restore Powershell Script
-This script help admin backup and restore user's data to and from QNAP network drive. This offers a conveninet way to store important files offsite and restore them when needed.
+This script helps the admin backup and restore the user's data to and from the QNAP network drive. This offers a convenient way to store important files offsite and restore them when needed.
 
 ## Features
 
@@ -19,7 +19,7 @@ This script help admin backup and restore user's data to and from QNAP network d
 
 ## Installation
 
-- Download and place the script anywhere in directory
+- Download and place the script anywhere in the directory
 
 ## Usage
 
@@ -30,9 +30,9 @@ This script help admin backup and restore user's data to and from QNAP network d
 ### Connecting to QNAP Drive
 - You will be prompted to enter your QNAP network drive credentials
 
-### 1. Perfoming a backup
+### 1. Performing a backup
 - Choose the backup option from the menu.
-- The script will automatically backup specified directories which is 3 folder Desktop, Documents, Downloads in C:\Users.
+- The script will automatically backup specified directories which is 3 folder Desktop, Documents, and Downloads in C:\Users.
 
 ### 2. Restoring Data
 - Choose the restore option from the menu.
@@ -40,8 +40,8 @@ This script help admin backup and restore user's data to and from QNAP network d
 - The script will restore data to the corresponding directories on your local machine.
 
 ## Customization
-- Edit the ```$qnapPath``` variable to match the path of you QNAP network drive.
-- Modify the ```$directories``` array to include or exclude directoies as per your requirement.
+- Edit the ```$qnapPath``` variable to match the path of your QNAP network drive.
+- Modify the ```$directories``` array to include or exclude directories as per your requirement.
 
 ## Troubleshooting
 - Ensure network connectivity to the QNAP drive.
