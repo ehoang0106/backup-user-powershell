@@ -1,11 +1,3 @@
-Set-ExecutionPolicy RemoteSigned
-
-$currentUser = New-Object Security.Principal.WindowsPrincipal([Security.Principal.WindowsIdentity]::GetCurrent())
-if (-not ($currentUser.IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator))) {
-    $script = $MyInvocation.MyCommand.Definition
-    Start-Process PowerShell -ArgumentList "-NoProfile -ExecutionPolicy Bypass -File `"$script`"" -Verb RunAs
-    
-}
 
 
 $qnapPath = "\\11.0.0.53\backup\Awaken\Users"
