@@ -1,3 +1,4 @@
+![demo](https://i.imgur.com/7CD2SBL.png)
 # QNAP Backup and Restore PowerShell Script
 This script helps the admin backup and restore the user's data to and from the QNAP network drive. This offers a convenient way to store important files offsite and restore them when needed.
 
