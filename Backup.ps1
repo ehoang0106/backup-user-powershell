@@ -55,7 +55,7 @@ function Backup-UserData {
         while(!($usernameExisted))
         {   
             #this will get the exact folder name of the current user is logging
-            $userFolderName = $env:Username
+            $userFolderName = (Get-WmiObject -Class Win32_ComputerSystem | Select-Object -ExpandProperty username).split('\') | Select-Object -Last 1
 
 
             Write-Host "Checking if $userFolderName folder existed..."
@@ -106,7 +106,7 @@ function Backup-UserData {
     
         while ($isFolderExisted) {
             
-            $userFolderName = $env:Username
+            $userFolderName = (Get-WmiObject -Class Win32_ComputerSystem | Select-Object -ExpandProperty username).split('\') | Select-Object -Last 1
     
             Write-Host "Checking if $userFolderName folder existed..."
             Start-Sleep 1
