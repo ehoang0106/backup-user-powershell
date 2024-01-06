@@ -162,33 +162,45 @@ function Restore-UserData {
         Write-Host "`nStarting restore data..."
         Start-Sleep 1
         
+        $usernameExisted = $false
         
-        $userFolderName = Read-Host "Enter name of the folder will be restored on QNAP"
-        Write-Host "Checking if $userFolderName existed"
-        Start-Sleep 1
+        
 
-        if (!(Test-Path -path "$qnapPath\$userFolderName"))
-        {
-            Write-Host "`nSuccessfully checked"
+        while (!($usernameExisted)) {
+            $userFolderName = Read-Host "Enter name of the folder will be restored on QNAP"
+            Write-Host "Checking if $userFolderName existed"
             Start-Sleep 1
+
+            if (!(Test-Path -path "$qnapPath\$userFolderName"))
+            {
+                Write-Host "`nSuccessfully checked"
+                Start-Sleep 1
+
+                $destinationFolder = $env:Username
+
+            
+                foreach ($dir in $directories)
+                {
+                    Write-Host "Restoring $dir...`nPlease wait!..."
+
+                    robocopy "$qnapPath\$userFolderName\$dir" "C:\Users\$destinationFolder\$dir" /e /r:0 /w:0 /njs /eta /copy:dat
+                }
+                $usernameExisted = $true
+
+                Write-Host "----------------------------"
+                Write-Host "Successfully restored data!"
+                Write-Host "----------------------------"
+                Write-Host "Press any key to continue..."
+                $null = $Host.UI.RawUI.ReadKey("NoEcho, IncludeKeyDown")
+            }
+            else {
+                write-host "Folder existed!`n"
+                $userFolderName = Read-Host "Enter different folder name"
+            }    
+            
+            
         }
-
-        #get this username of the user is logging in
-        $destinationFolder = $env:Username
-
         
-        foreach ($dir in $directories)
-        {
-            Write-Host "Restoring $dir...`nPlease wait!..."
-
-            robocopy "$qnapPath\$userFolderName\$dir" "C:\Users\$destinationFolder\$dir" /e /r:0 /w:0 /njs /eta /copy:dat
-        }
-
-        Write-Host "----------------------------"
-        Write-Host "Successfully restored data!"
-        Write-Host "----------------------------"
-        Write-Host "Press any key to continue..."
-        $null = $Host.UI.RawUI.ReadKey("NoEcho, IncludeKeyDown")
     }
     catch{
         write-host "Unsuccessful restore the data. Try again!"
