@@ -105,10 +105,7 @@ function Backup-UserData {
         $isFolderExisted = $true #flag if folder existed
     
         while ($isFolderExisted) {
-            #debug -> This is just for debug to test out
-            #$username = Read-Host "Enter the folder username in C drive"
-
-            #Turn off this will get the exact folder for the current logged in user to start the copy process
+            
             $userFolderName = $env:Username
     
             Write-Host "Checking if $userFolderName folder existed..."
@@ -141,8 +138,8 @@ function Backup-UserData {
                 
             }
             else {
-                Write-Host "Folder <$userFolderName> does not exists. Please re-enter."
-                $userFolderName = Read-Host "Enter folder name"
+                Write-Host "Folder <$userFolderName> does not exists."
+            
 
             }
         }
