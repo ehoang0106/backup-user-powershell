@@ -176,7 +176,7 @@ function Restore-UserData {
                 Write-Host "`nSuccessfully checked"
                 Start-Sleep 1
 
-                $destinationFolder = $env:Username
+                $destinationFolder = Read-Host "Enter destination folder"
 
             
                 foreach ($dir in $directories)
