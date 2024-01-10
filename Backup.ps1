@@ -171,7 +171,7 @@ function Restore-UserData {
             Write-Host "Checking if $userFolderName existed"
             Start-Sleep 1
 
-            if (!(Test-Path -path "$qnapPath\$userFolderName"))
+            if ((Test-Path -path "$qnapPath\$userFolderName"))
             {
                 Write-Host "`nSuccessfully checked"
                 Start-Sleep 1
@@ -194,8 +194,8 @@ function Restore-UserData {
                 $null = $Host.UI.RawUI.ReadKey("NoEcho, IncludeKeyDown")
             }
             else {
-                write-host "Folder existed!`n"
-                $userFolderName = Read-Host "Enter different folder name"
+                write-host "Folder does not exist!`n"
+                
             }    
             
             
