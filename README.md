@@ -46,7 +46,7 @@ This script helps the admin backup and restore the user's data to and from the Q
 
 ## Troubleshooting
 - Ensure network connectivity to the QNAP drive.
-- The script is run with administrative previlage.
+- Ensure the script is run with administrative privileges.
 - Verify that the paths specified in the script are accurate and accessible.
 - Close all the File Explore are opening
 
