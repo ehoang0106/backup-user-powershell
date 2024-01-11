@@ -176,7 +176,8 @@ function Restore-UserData {
                 Write-Host "`nSuccessfully checked"
                 Start-Sleep 1
 
-                $destinationFolder = Read-Host "Enter destination folder"
+                #get current user's folder logging
+                $destinationFolder = (Get-WmiObject -Class Win32_ComputerSystem | Select-Object -ExpandProperty username).split('\') | Select-Object -Last 1
 
             
                 foreach ($dir in $directories)
