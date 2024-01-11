@@ -24,8 +24,8 @@ This script helps the admin backup and restore the user's data to and from the Q
 
 ## Usage
 
-1. Locate the script
-2. Right-click on the script file and choose **Run with Powershell**
+1. Set ExecutionPolicy to bypass to ensure can run.
+2. Open  **PowerShell as Administrator** and run the script.
 3. Follow the on-screen prompts to connect to the QNAP drive and choose between the options.
 
 ### Connecting to QNAP Drive
@@ -46,6 +46,7 @@ This script helps the admin backup and restore the user's data to and from the Q
 
 ## Troubleshooting
 - Ensure network connectivity to the QNAP drive.
+- The script is run with administrative previlage.
 - Verify that the paths specified in the script are accurate and accessible.
 - Close all the File Explore are opening
 
