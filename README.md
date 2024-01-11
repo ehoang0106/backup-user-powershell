@@ -5,7 +5,7 @@ This script helps the admin backup and restore the user's data to and from the Q
 ## Features
 
 - **Automated connection to QNAP drive**: Easily connect to our QNAP network drive with user credentials.
-- **Data Backup**: Backup specific directories such as Desktop, Documents, and Downloads.
+- **Data Backup**: Backup specific directories such as Desktop, Documents, and Downloads with just 1 click.
 - **Data Restoration**: Restore backed-up data from the QNAP drive to the local machine.
 - **User Interface**: Simple menu-driven interface for ease of use.
 
