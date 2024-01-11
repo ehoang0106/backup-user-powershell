@@ -96,6 +96,36 @@ function Backup-UserData {
                 
                 write-host "Folder existed!`n"
                 $userFolderName = Read-Host "Enter different folder name"
+                if(!(Test-Path -Path "$qnapPath\$userFolderName"))
+                {   
+                    Write-Host "`nSuccessfully checked!"
+                    Start-Sleep 1
+                    Write-Host "`nCreating $userFolderName folder..."
+                    Start-Sleep 1
+                    foreach($dir in $directories)
+                    {   
+                        Write-Host "`t|"
+                        Write-Host  "`t\"
+
+                        Write-Host "`t   Creating $dir folder..."
+                        start-sleep -second 1
+                    }
+        
+                    write-host "`nSuccesfully created folders!`n"
+        
+                    New-Item -Path $qnapPath -Name "$userFolderName" -ItemType Directory | Out-Null
+                    
+                    #Out-Null is not showing off any information about creating directories
+                    
+                    #create 3 folder Desktop, Documents and Downloads
+                    foreach($dir in $directories)
+                    {
+                        New-Item -path "$qnapPath\$userFolderName" -Name "$dir" -ItemType Directory
+                    }
+                    $usernameExisted = $true
+        
+                    Write-Host "`n"
+                }
                 
             }
         }
@@ -173,7 +203,8 @@ function Restore-UserData {
 
             if ((Test-Path -path "$qnapPath\$userFolderName"))
             {
-                Write-Host "`nSuccessfully checked"
+                Write-Host "`nSuccessfully checked. Folder $userFolderName exists."
+                Write-Host
                 Start-Sleep 1
 
                 #get current user's folder logging
@@ -183,7 +214,7 @@ function Restore-UserData {
                 foreach ($dir in $directories)
                 {
                     Write-Host "Restoring $dir...`nPlease wait!..."
-
+                    Start-Sleep 2
                     robocopy "$qnapPath\$userFolderName\$dir" "C:\Users\$destinationFolder\$dir" /e /r:0 /w:0 /njs /eta /copy:dat
                 }
                 $usernameExisted = $true
