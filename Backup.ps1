@@ -5,7 +5,7 @@ $directories = @("Desktop", "Documents", "Downloads")
 
 function Connect-QNAP {
     param (
-   
+
         [string] $qnapPath
     )
     $isComplete = $false
@@ -40,7 +40,7 @@ function Connect-QNAP {
         catch {
         write-host "Unsuccessful connecting the network drive. Try again!"
     
-      }
+        }
     }
 }
     
@@ -56,7 +56,6 @@ function Backup-UserData {
         {   
             #this will get the exact folder name of the current user is logging
             $userFolderName = (Get-WmiObject -Class Win32_ComputerSystem | Select-Object -ExpandProperty username).split('\') | Select-Object -Last 1
-
 
             Write-Host "Checking if $userFolderName folder existed..."
             Start-Sleep 1
@@ -98,7 +97,6 @@ function Backup-UserData {
                 
             }
         }
-    
         #starting copy folder from QNAP to local
 
         $isFolderExisted = $true #flag if folder existed
@@ -138,8 +136,6 @@ function Backup-UserData {
             }
             else {
                 Write-Host "Folder <$userFolderName> does not exists."
-            
-
             }
         }
     }
@@ -148,8 +144,6 @@ function Backup-UserData {
         write-host "Unsuccessful backup the data. Try again!"
     }
 }
-
-
 
 function Restore-UserData {
     param (
@@ -162,8 +156,6 @@ function Restore-UserData {
         Start-Sleep 1
         
         $usernameExisted = $false
-        
-        
 
         while (!($usernameExisted)) {
             $userFolderName = Read-Host "Enter name of the folder will be restored on QNAP"
@@ -178,7 +170,6 @@ function Restore-UserData {
 
                 #get current user's folder logging
                 $destinationFolder = (Get-WmiObject -Class Win32_ComputerSystem | Select-Object -ExpandProperty username).split('\') | Select-Object -Last 1
-
             
                 foreach ($dir in $directories)
                 {
@@ -197,9 +188,7 @@ function Restore-UserData {
             else {
                 write-host "Folder does not exist!`n"
                 
-            }    
-            
-            
+            }      
         }
         
     }
@@ -207,8 +196,6 @@ function Restore-UserData {
         write-host "Unsuccessful restore the data. Try again!"
     }
 }
-
-
 
 function Backup-Menu {
 
@@ -220,7 +207,6 @@ function Backup-Menu {
         Write-Host "----------------------"
 
         $option = Read-Host "Enter option"
-
 
         if ($option -eq "1"){
             Backup-UserData -qnapPath $qnapPath -directories $directories
@@ -240,9 +226,5 @@ function Backup-Menu {
 
 }
 
-
-
 Connect-QNAP -qnapPath $qnapPath
-
-
 Backup-Menu
