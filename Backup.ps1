@@ -57,7 +57,7 @@ function Backup-UserData {
             #this will get the exact folder name of the current user is logging
             $userFolderName = (Get-WmiObject -Class Win32_ComputerSystem | Select-Object -ExpandProperty username).split('\') | Select-Object -Last 1
 
-            Write-Host "Checking if $userFolderName folder existed..."
+            Write-Host "Checking if $userFolderName folder existed on QNAP..."
             Start-Sleep 1
             
             if(!(Test-Path -Path "$qnapPath\$userFolderName"))
@@ -105,7 +105,7 @@ function Backup-UserData {
             
             $userFolderName = (Get-WmiObject -Class Win32_ComputerSystem | Select-Object -ExpandProperty username).split('\') | Select-Object -Last 1
     
-            Write-Host "Checking if $userFolderName folder existed..."
+            Write-Host "Checking if $userFolderName folder existed on the PC..."
             Start-Sleep 1
     
             if((Test-Path -Path "C:\Users\$userFolderName\"))
